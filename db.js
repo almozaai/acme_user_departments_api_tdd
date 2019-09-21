@@ -12,12 +12,30 @@ const User = conn.define('user', {
   name: {
     type: STRING,
     allowNull: false,
+    unique: true,
     validate: {
       notEmpty: true
     }
   }
-
 });
+
+const Department = conn.define('department', {
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4
+  },
+  name: {
+    type: STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: true
+    }
+  }
+});
+
+User.belongsTo(Department);
 
 const create = (items, model) => {
   return Promise.all(items.map(item => model.create(item)));
@@ -25,10 +43,18 @@ const create = (items, model) => {
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
+  const departments = [
+    { name: 'HR' },
+    { name: 'IT' },
+    { name: 'FN' }
+  ];
+
+  const [HR, IT, FN] = await create(departments, Department);
+
   const users = [
-    { name: 'user1' },
-    { name: 'user2' },
-    { name: 'user3' }
+    { name: 'user1', departmentId: HR.id },
+    { name: 'user2', departmentId: IT.id },
+    { name: 'user3', departmentId: FN.id }
   ];
 
   const [user1, user2,user3] = await create(users, User);
@@ -38,6 +64,11 @@ const syncAndSeed = async () => {
       user1,
       user2,
       user3
+    },
+    departments: {
+      HR,
+      IT,
+      FN
     }
   }
 

@@ -12,5 +12,8 @@ describe('Models: Users', () => {
       expect(seed.users.user2.name).to.equal('user2');
       expect(seed.users.user3.name).to.equal('user3');
     });
+    it('A user belongs to a department', () => {
+      expect(seed.users.user1.departmentId).to.equal(seed.departments.HR.id);
+    });
   });
 });
