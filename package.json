@@ -1,0 +1,30 @@
+{
+  "name": "acme_user_departments_api_tdd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "db.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^7.12.1",
+    "sequelize": "^5.19.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "supertest": "^4.0.2"
+  },
+  "scripts": {
+    "test": "mocha spec.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almozaai/acme_user_departments_api_tdd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/almozaai/acme_user_departments_api_tdd/issues"
+  },
+  "homepage": "https://github.com/almozaai/acme_user_departments_api_tdd#readme"
+}
