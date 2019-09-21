@@ -67,4 +67,10 @@ describe('API User Routes', () => {
         });
     });
   });
+  describe('DELETE /api/users', () => {
+    it('deletes a user', () => {
+      return app.delete(`/api/users/${seed.users.user2.id}`)
+        .expect(204);
+    });
+  });
 });

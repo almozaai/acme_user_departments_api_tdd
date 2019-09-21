@@ -26,3 +26,10 @@ app.put('/api/users/:id', (req, res, next) => {
     .then(user => res.send(user))
     .catch(next);
 });
+
+app.delete('/api/users/:id', (req, res, next) => {
+  User.findByPk(req.params.id)
+    .then(user => user.destroy())
+    .then(() => res.sendStatus(204))
+    .catch(next);
+});
