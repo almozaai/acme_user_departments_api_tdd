@@ -56,4 +56,15 @@ describe('API User Routes', () => {
         });
     });
   });
+  describe('PUT /api/users', () => {
+    it('updates a user', () => {
+      return app.put(`/api/users/${seed.users.user1.id}`)
+        .send({name: 'user1.1', departmentId: seed.departments.IT.id})
+        .expect(200)
+        .then( response => {
+          expect(response.body.name).to.equal('user1.1');
+          expect(response.body.departmentId).to.equal(seed.departments.IT.id);
+        });
+    });
+  });
 });
