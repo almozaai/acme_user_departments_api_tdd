@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const db = require('./db');
 const { User, Department } = db.models;
-// const app = require('supertest')(require('./app'));
+const app = require('supertest')(require('./app'));
 
 describe('Models: Users', () => {
   let seed;
@@ -33,6 +33,27 @@ describe('Models: Users', () => {
   });
 });
 
-describe('API Routes', () => {
-  
+describe('API User Routes', () => {
+  let seed;
+  beforeEach(async () => seed = await db.syncAndSeed());
+  describe('GET /api/users', () => {
+    it('returns the users', () => {
+      return app.get('/api/users')
+        .expect(200)
+        .then(response => {
+          expect(response.body.length).to.equal(3);
+        });
+    });
+  });
+  describe('POST /api/users', () => {
+    it('add a user', () => {
+      return app.post('/api/users')
+        .send({ name: 'user4', departmentId: ''})
+        .expect(201)
+        .then( response => {
+          expect(response.body.name).to.equal('user4');
+          expect(response.body.departmentId).to.equal(null);
+        });
+    });
+  });
 });
