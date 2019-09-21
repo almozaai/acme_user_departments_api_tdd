@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const db = require('./db');
-// const { Product, Category } = db.models;
+const { User, Department } = db.models;
 // const app = require('supertest')(require('./app'));
 
 describe('Models: Users', () => {
@@ -16,4 +16,23 @@ describe('Models: Users', () => {
       expect(seed.users.user1.departmentId).to.equal(seed.departments.HR.id);
     });
   });
+  describe('Hooks', () => {
+    it('An empty depatmentId will get set to null', async () => {
+      const user = await User.create({name: 'user4', departmentId: ''});
+      expect(user.departmentId).to.equal(null);
+    })
+  });
+  describe('User Validation', () => {
+    it('name cannot be an empty string', () => {
+      return User.create({name: ''})
+        .then(() => {
+          throw new 'Name cannot be empty!';
+        })
+        .catch(ex => expect(ex.errors[0].path).to.equal('name'));
+    });
+  });
+});
+
+describe('API Routes', () => {
+  
 });

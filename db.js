@@ -17,6 +17,14 @@ const User = conn.define('user', {
       notEmpty: true
     }
   }
+}, {
+  hooks: {
+    beforeSave: function(user) {
+      if(user.departmentId === ''){
+        user.departmentId = null;
+      }
+    }
+  }
 });
 
 const Department = conn.define('department', {
