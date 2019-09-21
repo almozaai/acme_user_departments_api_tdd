@@ -74,3 +74,43 @@ describe('API User Routes', () => {
     });
   });
 });
+
+describe('API Department Routes', () => {
+  let seed;
+  beforeEach(async () => seed = await db.syncAndSeed());
+  describe('GET /api/departments', () => {
+    it('returns all departments', () => {
+      return app.get('/api/departments')
+        .expect(200)
+        .then( response => {
+          expect(response.body.length).to.equal(3);
+        });
+    });
+  });
+  describe('POST /api/departments', () => {
+    it('creates a department', () => {
+      return app.post('/api/departments')
+        .send({name: 'LG'})
+        .expect(201)
+        .then( response => {
+          expect(response.body.name).to.equal('LG');
+        });
+    });
+  });
+  describe('PUT /api/departments', () => {
+    it('updates a department', () => {
+      return app.put(`/api/departments/${seed.departments.FN.id}`)
+        .send({name: 'TL'})
+        .expect(200)
+        .then( response => {
+          expect(response.body.name).to.equal('TL');
+        });
+    });
+  });
+  describe('DELETE /api/departments', () => {
+    it('delete a department', () => {
+      return app.delete(`/api/departments/${seed.departments.IT.id}`)
+        .expect(204);
+    });
+  });
+});

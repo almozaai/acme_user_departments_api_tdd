@@ -84,7 +84,9 @@ const syncAndSeed = async () => {
 
 module.exports = {
   syncAndSeed,
+  conn,
   models: {
-    User
+    User,
+    Department
   }
 }
